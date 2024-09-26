@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "sopa-de-letrinhas"
+version = "0.1.0"
+description = "Desenvolvimento de raciocínio lógico através da identificação de objetos, identificação e formação de palavras com incorporação de elementos de jogos digitais."
+authors = ["Rodrigo Almeida <c.almeidarodrigo@gmail.com>, Lil Galo <lilsgalo@gmail.com>, Roberta Ferraz <robertaferraz100@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
