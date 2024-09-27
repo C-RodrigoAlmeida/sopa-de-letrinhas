@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
+    {% if not user.is_authenticated %}
+        {% include 'components/navbar_not_authenticated.html' %}
+    {% else %}
+        {% include 'components/navbar_authenticated.html' %}
+    {% endif %}
     {% block content %}
     {% endblock %}
 </body>
