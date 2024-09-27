@@ -1,0 +1,8 @@
+<div>
+    <h1 class="mb-2">{{ title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p class="mb-2">Tem certeza que deseja deletar {{ object_type }} '{{ object }}' ?</p>
+        <input type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-gray-300 rounded" value="Deletar">
+    </form>
+</div>

@@ -16,6 +16,8 @@ class WordCreateView(LoginRequiredMixin, CreateView):
         context['title'] = 'Formulário de registro de palavras'
         context['submit_button_text'] = 'Registrar'
 
+        return context
+    
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)

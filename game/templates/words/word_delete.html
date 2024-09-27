@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load object_delete_inclusion %}
+
+{% block title %}
+    Formulário de exclusão de palavras registradas
+{% endblock %}
+    
+{% block content %}
+    {% object_delete_inclusion title=title object_type=object_type object=object %}
+{% endblock %}

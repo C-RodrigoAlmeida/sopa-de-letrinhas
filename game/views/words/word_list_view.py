@@ -17,7 +17,7 @@ class WordListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         search = self.request.GET.get('search', '')
-        return self.model.objects.filter(word__icontains=search) if search else super().get_queryset()
+        return self.model.objects.filter(word__icontains=search, deleted_at__isnull=True).order_by('word') if search else self.model.objects.filter(deleted_at__isnull=True).order_by('word')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
