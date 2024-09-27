@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load base_object_details_inclusion %}
+
+{% block title %}
+    Detalhes do registro de palavra
+{% endblock %}
+
+{% block content %}
+    {% base_object_details_inclusion object=object object_type=object_type fields=fields object_name=object_name %}
+{% endblock %}

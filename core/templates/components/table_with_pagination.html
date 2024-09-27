@@ -39,9 +39,12 @@
                         <a href="{% url row_update object.id%}" class="mr-2">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </a>
-                        {% comment %} <a href="{% url row_delete object.id %}" class="ml-2">
+                        <a href="{% url row_delete object.id %}" class="ml-2">
                             <i class="fa-regular fa-trash-can"></i>
-                        </a> {% endcomment %}
+                        </a>
+                        <a href="{% url row_details object.id %}" class="ml-2">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
             {% empty %}

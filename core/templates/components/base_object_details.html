@@ -1,0 +1,21 @@
+<div>
+    <h1 class="mb-2">Detalhes do registro {{ object_type }} {{ object }}</h1>
+        {% csrf_token %}
+        {% for field_name, field_value in fields %}
+            <div class="flex mb-2">
+                {{ field_name }}: {{ field_value }}
+            </div>
+        {% endfor %}
+
+        <div class="flex gap-2 mb-2">
+            <a href="{% url object_delete object.id %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
+                <i class="fa-solid fa-delete-left"></i>
+            </a>
+            <a href="{% url object_update object.id %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+            <a href="{% url object_list %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
+                <i class="fa-solid fa-backward"></i>
+            </a>
+        </div>
+</div>

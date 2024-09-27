@@ -1,5 +1,6 @@
 from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from game.forms.word_form import WordForm
@@ -9,6 +10,7 @@ class WordCreateView(LoginRequiredMixin, CreateView):
     model = Word
     form_class = WordForm
     template_name = "words/word_registration.html"
+    success_url = reverse_lazy('game:word_list')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
