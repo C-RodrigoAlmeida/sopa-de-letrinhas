@@ -7,7 +7,7 @@ from game.models.word import Word
 class WordUpdateView(LoginRequiredMixin, UpdateView):
     model = Word
     form_class = WordForm
-    template_name = "word_update.html"
+    template_name = "words/word_update.html"
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user

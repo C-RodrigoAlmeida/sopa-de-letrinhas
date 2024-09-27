@@ -7,7 +7,7 @@ from game.models.word import Word
 class WordCreateView(LoginRequiredMixin, CreateView):
     model = Word
     form_class = WordForm
-    template_name = "word_registration.html"
+    template_name = "words/word_registration.html"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

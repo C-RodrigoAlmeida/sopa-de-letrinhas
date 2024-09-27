@@ -1,0 +1,98 @@
+{% load get_attribute %}
+<div class="m-5 rounded-lg">
+    <!-- pagination search bar and table title -->
+    <div class="grid grid-cols-3 px-6 py-4 font-bold">
+        <div></div>
+        <div class="text-center text-3xl">
+            <p>{{ title }}</p>
+        </div>
+        <form action="{% url table_url %}" method="GET" class="flex items-center px-10 gap-1">
+            <p>Buscar:</p>
+            <input type="text" value="{{ search }}" name="search" class="w-full bg-inherit border-b-2 border-gray-300 focus:outline-none focus:border-teal-800 text-white p-2 cursor-pointer">
+            <button type="submit" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <a href="{% url table_url %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
+                <i class="fa-solid fa-delete-left"></i>
+            </a>
+        </form>
+    </div>
+
+    <!-- table itself -->
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs font-bold uppercase">
+            <tr class="border-b border-black">
+                {% for header in headers %}
+                    <th scope="col" class="px-6 py-3">{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in object_list %}
+                <tr class="border-b border-black">
+                    {% for field in acessors %}
+                        {% if field != 'action' %}
+                            <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ object|get_attribute:field }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td scope="row" class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url row_update object.id%}" class="mr-2">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </a>
+                        {% comment %} <a href="{% url row_delete object.id %}" class="ml-2">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </a> {% endcomment %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr class="border-b border-black">
+                    <td scope="row" class="px-6 py-4 whitespace-nowrap text-center" colspan="{{ headers|length }}">Nenhum registro encontrado</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+    <div class="pagination items-center justify-center text-gray-300 text-md font-medium flex mx-auto">
+        <span class="step-links flex items-center justify-center w-1/4">
+            {% if pagination_controls.has_previous %}
+                <a 
+                    class="flex items-center justify-center px-1 h-8 font-medium text-white bg-[#202c33] rounded hover:bg-teal-800" 
+                    href="?page=1{% if search %}&search={{ search }}{% endif %}"
+                >
+                    <i class="fa-solid fa-backward"></i>
+                </a>
+
+                <a 
+                    class="flex items-center justify-center px-1 h-8 font-medium text-white bg-[#202c33] rounded hover:bg-teal-800" 
+                    href="?page={{ pagination_controls.previous_page_number }}{% if search %}&search={{ search }}{% endif %}"
+                >
+                    <i class="fa-solid fa-caret-left"></i>
+                </a>
+
+            {% endif %}
+            <span 
+                class="current text-gray-700 dark:text-gray-400"
+            >
+                Page <span class="font-semibold text-gray-900 dark:text-white">{{ pagination_controls.number }}</span> 
+                of <span class="font-semibold text-gray-900 dark:text-white">{{ pagination_controls.paginator.num_pages }}</span>.
+            </span>
+
+            {% if pagination_controls.has_next %}
+                <a 
+                    class="flex items-center justify-center px-1 h-8 font-medium text-white bg-[#202c33] rounded hover:bg-teal-800" 
+                    href="?page={{ pagination_controls.next_page_number }}{% if search %}&search={{ search }}{% endif %}"
+                >
+                    <i class="fa-solid fa-caret-right"></i>
+                </a>
+
+                <a 
+                    class="flex items-center justify-center px-1 h-8 font-medium text-white bg-[#202c33] rounded hover:bg-teal-800" 
+                    href="?page={{ pagination_controls.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}"
+                >
+                    <i class="fa-solid fa-forward"></i>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+</div>
