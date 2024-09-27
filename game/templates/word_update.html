@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load form_inclusion %}
+
+{% block title %}
+    Formulário de atualização de palavras registradas
+{% endblock %}
+
+{% block content %}
+    {% form_inclusion form 'Formulário de atualização de palavras' 'Atualizar' %}
+{% endblock %}

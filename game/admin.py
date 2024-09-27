@@ -1,5 +1,4 @@
 from django.contrib import admin
-from game.models.palavra import Palavra
+from game.models.word import Word
 
-# Register your models here.
-admin.site.register(Palavra)
+admin.site.register(Word)
