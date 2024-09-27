@@ -1,4 +1,6 @@
+from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.query import QuerySet
 from django.views.generic import ListView
 
 from django.core.paginator import Paginator
@@ -13,7 +15,11 @@ class WordListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     template_name = "words/word_list.html"
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self) -> QuerySet[Any]:
+        search = self.request.GET.get('search', '')
+        return self.model.objects.filter(word__icontains=search) if search else super().get_queryset()
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
         context['title'] = 'Lista de palavras registradas'
