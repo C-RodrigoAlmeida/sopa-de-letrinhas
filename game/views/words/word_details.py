@@ -11,9 +11,19 @@ class WordDetailsView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        word = self.get_object()
-        context['fields'] = [(field.verbose_name, field.value_from_object(word)) for field in word._meta.fields]
-        context['object_name'] = 'game:word'
-        context['object_type'] = 'da palavra'
+        context['field_names'] = {
+            'created_by': 'Criado por',
+            'created_at': 'Criado em',
+            'updated_by': 'Atualizado por',
+            'updated_at': 'Atualizado em'
+        }
+
+        context['model_name'] = 'game:word'
+        context['model_description'] = 'da palavra'
 
         return context
+
+
+
+
+
