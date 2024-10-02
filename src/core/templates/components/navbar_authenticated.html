@@ -22,7 +22,7 @@
         
     </div>
     <div class="w-1/5 flex gap-2 justify-end">
-        <form action="{% url 'user:logout' %}" method="POST">
+        <form action="{% url 'accounts:logout' %}" method="POST">
             {% csrf_token %}
             <button class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
                 <i class="fa-solid fa-right-from-bracket"></i>
