@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",
-    "game",
-    "core",
-    "accounts",
+    "src.home",
+    "src.game",
+    "src.core",
+    "src.accounts",
 ]
 
 MIDDLEWARE = [
