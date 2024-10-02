@@ -1,6 +1,6 @@
 from typing import Any
 from django.contrib.auth import login
-from user.forms.registration_form import CustomUserCreationForm
+from accounts.forms.registration_form import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
