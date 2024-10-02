@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load object_delete_inclusion %}
+
+{% block title %}
+    Formulário de exclusão de conjunto registrado
+{% endblock %}
+    
+{% block content %}
+    {% object_delete_inclusion form_title=title object_type=object_type object=object %}
+{% endblock %}

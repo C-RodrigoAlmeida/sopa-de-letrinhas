@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.inclusion_tag('components/base_object_details.html')
-def base_object_details_inclusion(object, model_description, model_name, field_names):
+def base_object_details_inclusion(object: object, model_description: str, model_name: str, field_names: dict) -> dict:
     return {
         'object': object,
         'model_description': model_description,
