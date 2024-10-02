@@ -5,7 +5,7 @@ from game.models.joint import Joint
 class JointForm(forms.ModelForm):
     class Meta:
         model = Joint
-        fields = ['words', 'is_public']
+        fields = ['is_public', 'words']
 
     def __init__(self, *args, **kwargs):
         words_not_in_joint = kwargs.pop('words_not_in_joint', None)
@@ -16,7 +16,7 @@ class JointForm(forms.ModelForm):
             self.fields['words_not_in_joint'] = forms.ModelMultipleChoiceField(
                 queryset=words_not_in_joint,
                 required=False,
-                label="Words Not in Joint",
+                label="Palavras não incluidas:",
                 # widget=forms.CheckboxSelectMultiple
             )
 
