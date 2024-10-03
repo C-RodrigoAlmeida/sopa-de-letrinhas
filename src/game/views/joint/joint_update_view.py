@@ -11,7 +11,7 @@ class JointUpdateView(LoginRequiredMixin, UpdateView):
     model = Joint
     form_class = JointForm
     template_name = "words/word_update.html"
-    success_url = reverse_lazy('game:joint_list')
+    success_url = reverse_lazy('joint:list')
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_form_kwargs() or {}

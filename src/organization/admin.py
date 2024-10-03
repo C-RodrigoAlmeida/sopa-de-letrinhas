@@ -11,6 +11,6 @@ class MembershipInline(admin.TabularInline):
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     inlines = [MembershipInline]
-    list_display = ('name', 'website', 'created_by')
+    list_display = ('id', 'name', 'website', 'created_by')
     list_filter = ('created_by',)
     search_fields = ('name', 'website')

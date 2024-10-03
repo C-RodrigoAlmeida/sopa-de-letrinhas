@@ -19,9 +19,9 @@ class WordDetailsView(LoginRequiredMixin, DetailView):
         }
 
         context['control_buttons'] = {
-            'game:word_update': 'fa-regular fa-pen-to-square',
-            'game:word_delete': 'fa-solid fa-delete-left',
-            'game:word_list': 'fa-solid fa-list'
+            'word:update': 'fa-regular fa-pen-to-square',
+            'word:delete': 'fa-solid fa-delete-left',
+            'word:list': 'fa-solid fa-list'
         }
         context['model_description'] = 'da palavra'
 

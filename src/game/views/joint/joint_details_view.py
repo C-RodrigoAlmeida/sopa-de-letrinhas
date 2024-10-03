@@ -17,9 +17,9 @@ class JointDetailsView(LoginRequiredMixin, DetailView):
         }
 
         context['control_buttons'] = {
-            'game:joint_update': 'fa-regular fa-pen-to-square',
-            'game:joint_delete': 'fa-solid fa-delete-left',
-            'game:joint_list': 'fa-solid fa-list'
+            'joint:update': 'fa-regular fa-pen-to-square',
+            'joint:delete': 'fa-solid fa-delete-left',
+            'joint:list': 'fa-solid fa-list'
         }
         
         context['model_description'] = 'do conjunto'

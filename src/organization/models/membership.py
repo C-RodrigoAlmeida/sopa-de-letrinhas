@@ -13,6 +13,7 @@ class Membership(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     role = models.CharField(max_length=15, choices=RoleChoices.choices)
+    approved = models.BooleanField(default=False)
 
     def get_principals(self):
         return self.organization.members.filter(role=RoleChoices.PRINCIPAL)

@@ -8,7 +8,7 @@ from src.game.models.word import Word
 class WordDeleteView(LoginRequiredMixin, DeleteView):
     model = Word
     template_name = "words/word_delete.html"
-    success_url = reverse_lazy('game:word_list')
+    success_url = reverse_lazy('word:list')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

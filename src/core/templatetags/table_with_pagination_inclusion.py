@@ -9,7 +9,7 @@ def table_with_pagination_inclusion(title, headers, acessors, actions, object_li
         'headers': headers,
         'acessors': acessors,
         'object_list': object_list,
-        'table_url': f'{model_name}_list',
+        'table_url': f'{model_name}:list',
         'actions': actions,
         'controls': pagination_controls,
         'search': search,

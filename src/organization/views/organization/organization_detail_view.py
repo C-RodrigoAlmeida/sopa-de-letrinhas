@@ -6,7 +6,7 @@ from src.organization.models.organization import Organization
 
 class OrganizationDetailView(LoginRequiredMixin, DetailView):
     model = Organization
-    template_name = "organization_details.html"
+    template_name = "organization/organization_details.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -21,6 +21,7 @@ class OrganizationDetailView(LoginRequiredMixin, DetailView):
         }
 
         context['control_buttons'] = {
+            'membership:registration': 'fa-regular fa-user-plus',
             'organization:organization_list': 'fa-solid fa-list'
         }
 

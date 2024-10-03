@@ -10,7 +10,7 @@ class JointCreateView(LoginRequiredMixin, CreateView):
     model = Joint
     form_class = JointForm
     template_name = "joints/joint_registration.html"
-    success_url = reverse_lazy('game:joint_list')
+    success_url = reverse_lazy('joint:list')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

@@ -9,8 +9,8 @@ from src.organization.forms.organization_form import OrganizationForm
 class OrganizationCreateView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = OrganizationForm
-    template_name = 'organization_resgistration.html'
-    # success_url = reverse_lazy('accounts:group_list')
+    template_name = 'organization/organization_resgistration.html'
+    success_url = reverse_lazy('organization:organization_list')
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_form_kwargs()

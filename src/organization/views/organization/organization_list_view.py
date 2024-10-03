@@ -10,12 +10,13 @@ from src.organization.models.organization import Organization
 
 class OrganizationListView(LoginRequiredMixin, ListView):
     model = Organization
-    template_name = "organization_list.html"
+    template_name = "organization/organization_list.html"
     context_object_name = "object_list"
     paginate_by = 10
 
     def get_queryset(self) -> Any:
-        return Organization.objects.all()
+        # TODO: add search
+        return Organization.objects.all().order_by('name')
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -23,11 +24,11 @@ class OrganizationListView(LoginRequiredMixin, ListView):
         context['title'] = 'Lista de organizações'
         context['headers'] = ['Nome', 'Site', 'Responsável(eis)', 'Ações']
         context['acessors'] = ['name', 'website', 'get_principals', 'action']
-        context['model_name'] = 'organization:organization'
+        context['model_name'] = 'organization'
         context['actions'] = {
-            'organization:organization_details': 'fa-regular fa-eye',
-            # 'organization:organization_update': 'fa-regular fa-pen-to-square',
-            # 'organization:organization_delete': 'fa-solid fa-delete-left'
+            'organization:details': 'fa-regular fa-eye',
+            # 'organization:update': 'fa-regular fa-pen-to-square',
+            # 'organization:delete': 'fa-solid fa-delete-left'
         }
 
         search = self.request.GET.get('search', '')

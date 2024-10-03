@@ -10,7 +10,7 @@ class WordUpdateView(LoginRequiredMixin, UpdateView):
     model = Word
     form_class = WordForm
     template_name = "words/word_update.html"
-    success_url = reverse_lazy('game:word_list')
+    success_url = reverse_lazy('word:list')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

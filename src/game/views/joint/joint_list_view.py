@@ -26,11 +26,11 @@ class JointListView(LoginRequiredMixin, ListView):
         context['headers'] = ['Conjunto de palavras', 'Criado em', 'Ações']
         context['acessors'] = ['display_words', 'created_at', 'action']
         context['actions'] = {
-            'game:joint_details': 'fa-regular fa-eye',
-            'game:joint_update': 'fa-regular fa-pen-to-square',
-            'game:joint_delete': 'fa-solid fa-delete-left'
+            'joint:details': 'fa-regular fa-eye',
+            'joint:update': 'fa-regular fa-pen-to-square',
+            'joint:delete': 'fa-solid fa-delete-left'
         }
-        context['model_name'] = 'game:joint'
+        context['model_name'] = 'joint'
     
         search = self.request.GET.get('search', '')
         if search:

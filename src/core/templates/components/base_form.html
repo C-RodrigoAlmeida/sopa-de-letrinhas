@@ -2,7 +2,7 @@
     <h1 class="mb-2">{{ form_title }}</h1>
     <form method="post">
         {% csrf_token %}
-        {% for field in form.visible_fields %}
+        {% for field in form %}
             <div class="flex mb-2">
                 {{ field.label_tag }}
                 {{ field }}
