@@ -2,7 +2,6 @@ from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 
-from src.organization.models.membership import RoleChoices
 from src.organization.models.organization import Organization
 
 class OrganizationDetailView(LoginRequiredMixin, DetailView):
