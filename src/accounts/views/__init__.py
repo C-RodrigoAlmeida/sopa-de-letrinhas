@@ -1,3 +1,3 @@
-from .logout import Logout
-from .login import Login
-from .registration import UserRegisterView
+from .user.logout import Logout
+from .user.login import Login
+from .user.registration import UserRegisterView
