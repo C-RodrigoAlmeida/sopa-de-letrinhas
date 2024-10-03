@@ -25,6 +25,11 @@ class WordListView(LoginRequiredMixin, ListView):
         context['title'] = 'Lista de palavras registradas'
         context['headers'] = ['Palavra', 'Criado por', 'Criado em', 'Ações']
         context['acessors'] = ['word', 'created_by', 'created_at', 'action']
+        context['actions'] = {
+            'game:word_details': 'fa-regular fa-eye',
+            'game:word_update': 'fa-regular fa-pen-to-square',
+            'game:word_delete': 'fa-solid fa-delete-left'
+        }
         context['model_name'] = 'game:word'
 
         search = self.request.GET.get('search', '')

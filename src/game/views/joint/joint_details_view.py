@@ -12,12 +12,16 @@ class JointDetailsView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
 
         context['field_names'] = {
-            'words': 'Palavras',
             'created_at': 'Criado em',
             'updated_at': 'Atualizado em'
         }
 
-        context['model_name'] = 'game:joint'
+        context['control_buttons'] = {
+            'game:joint_update': 'fa-regular fa-pen-to-square',
+            'game:joint_delete': 'fa-solid fa-delete-left',
+            'game:joint_list': 'fa-solid fa-list'
+        }
+        
         context['model_description'] = 'do conjunto'
 
         return context

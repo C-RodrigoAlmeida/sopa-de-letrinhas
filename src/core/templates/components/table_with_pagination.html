@@ -35,17 +35,15 @@
                             <td scope="row" class="px-6 py-4 whitespace-nowrap">{{ object|get_attribute:field }}</td>
                         {% endif %}
                     {% endfor %}
-                    <td scope="row" class="whitespace-nowrap">
-                        <a href="{% url row_details object.id %}" class="ml-2">
-                            <i class="fa-regular fa-eye"></i>
-                        </a>
-                        <a href="{% url row_update object.id%}" class="ml-2">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </a>
-                        <a href="{% url row_delete object.id %}" class="ml-2">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </a>
+                    
+                    <td scope="row" class="px-4 py-4 whitespace-nowrap">
+                        {% for action, icon in actions.items %}
+                            <a href="{% url action object.id %}" class="ml-2">
+                                <i class="{{ icon }}"></i>
+                            </a>
+                        {% endfor %}
                     </td>
+
                 </tr>
             {% empty %}
                 <tr class="border-b border-black">

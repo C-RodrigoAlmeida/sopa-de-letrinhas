@@ -14,6 +14,9 @@ class Membership(BaseModel):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     role = models.CharField(max_length=15, choices=RoleChoices.choices)
 
+    def get_principals(self):
+        return self.organization.members.filter(role=RoleChoices.PRINCIPAL)
+
     class Meta:
         unique_together = ('user', 'organization')
 

@@ -19,7 +19,8 @@ class OrganizationForm(forms.ModelForm):
 
         self.fields['website'].label = "Site:"
         self.fields['website'].widget.attrs.update({
-            'value': 'https://www.',
+            'placeholder': 'Insira o site da organização aqui!',
+            'onfocus':  'this.value = "https://www."'
         })
 
         for field in self.fields:

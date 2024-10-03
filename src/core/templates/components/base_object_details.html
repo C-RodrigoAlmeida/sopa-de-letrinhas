@@ -9,15 +9,17 @@
         {% endfor %}
     </div>
 
-    <div class="flex gap-2 mb-2">
-        <a href="{% url object_delete object.id %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
-            <i class="fa-solid fa-delete-left"></i>
-        </a>
-        <a href="{% url object_update object.id %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
-            <i class="fa-regular fa-pen-to-square"></i>
-        </a>
-        <a href="{% url object_list %}" class="bg-[#8696a0] hover:bg-teal-800 text-white p-2 rounded mt-3 cursor-pointer">
-            <i class="fa-solid fa-backward"></i>
-        </a>
-    </div>
+    <td scope="row" class="px-4 py-4 whitespace-nowrap">
+        {% for action, icon in control_buttons.items %}
+            {% if 'list' in action %}
+                <a href="{% url action %}" class="ml-2">
+                    <i class="{{ icon }}"></i>
+                </a>
+            {% else %}
+                <a href="{% url action object.id %}" class="ml-2">
+                    <i class="{{ icon }}"></i>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </td>
 </div>

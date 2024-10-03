@@ -5,5 +5,8 @@ class Joint(BaseModel):
     words = models.ManyToManyField('Word', related_name='joints')
     is_public = models.BooleanField(default=False)
 
+    def display_words(self) -> str:
+        return ", ".join(['...' if index == 3 else f'{word}' for index, word in enumerate(self.words.all()[:4])])
+
     def __str__(self):
         return ", ".join([word.word for word in self.words.all()])
