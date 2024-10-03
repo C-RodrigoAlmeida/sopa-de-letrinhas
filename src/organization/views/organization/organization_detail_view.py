@@ -22,7 +22,7 @@ class OrganizationDetailView(LoginRequiredMixin, DetailView):
 
         context['control_buttons'] = {
             'membership:registration': 'fa-regular fa-user-plus',
-            'organization:organization_list': 'fa-solid fa-list'
+            'organization:list': 'fa-solid fa-list'
         }
 
         context['model_description'] = 'da organização'

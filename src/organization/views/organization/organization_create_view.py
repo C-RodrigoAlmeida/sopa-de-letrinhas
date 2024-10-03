@@ -10,7 +10,7 @@ class OrganizationCreateView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = OrganizationForm
     template_name = 'organization/organization_resgistration.html'
-    success_url = reverse_lazy('organization:organization_list')
+    success_url = reverse_lazy('organization:list')
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_form_kwargs()

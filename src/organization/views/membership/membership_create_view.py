@@ -11,7 +11,7 @@ class MembershipCreateView(LoginRequiredMixin, CreateView):
     model = Membership
     template_name = "membership/membership_resgistration.html"
     form_class = MembershipForm
-    success_url = reverse_lazy('organization:organization_list')
+    success_url = reverse_lazy('organization:list')
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_form_kwargs()
