@@ -1,6 +1,9 @@
 from django import forms
+from django.db.models import Q
 from src.game.models.exercise import Exercise
+from src.organization.models.membership import RoleChoices
 from src.organization.models.organization import Organization
+
 
 class ExerciseForm(forms.ModelForm):
 
@@ -18,24 +21,22 @@ class ExerciseForm(forms.ModelForm):
             'description': 'Descrição',
             'joint': 'Conjunto',
             'correct_word': 'Palavra Correta',
-            'public': 'Público'
+            'public': 'Público',
+            'organization': 'Organização',
         }
 
-        self.fields['name'].label = "Nome"
-        self.fields['description'].label = "Descrição"
-        self.fields['joint'].label = "Conjunto"
-        self.fields['correct_word'].label = "Palavra Correta"
-        self.fields['public'].label = "Público"
+        self.fields['organization'].queryset = Organization.objects.filter(
+            membership__user=self.request.user
+        ).filter(
+            Q(membership__role=RoleChoices.TEACHER) | Q(membership__role=RoleChoices.PRINCIPAL)
+        ).order_by("name").distinct()
 
 
         for field in self.fields:
+            self.fields[field].label = field_labels[field]
             self.fields[field].required = True
             self.fields[field].widget.attrs.update(
                 {
                     'class': 'border border-gray-300 rounded',
                 }
             )
-
-    def save(self, commit: bool = ...) -> Exercise:
-        exercise = super().save(commit=False)
-        exercise.organization = Organization.members.

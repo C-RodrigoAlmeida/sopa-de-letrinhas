@@ -14,7 +14,7 @@ class ExerciseCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs =  super().get_form_kwargs()
-        kwargs['request']
+        kwargs['request'] = self.request
         return kwargs
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
