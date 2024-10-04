@@ -11,12 +11,15 @@ class WordForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['word'].required = True
         self.fields['word'].label = "Palavra"
-        self.fields['word'].widget.attrs.update({
-            'class': 'border border-gray-300 rounded',
-            'placeholder': self.data['word'] if 'word' in self.data else 'Insira a palavra desejada aqui!'
-            })
+        self.fields['word'].widget.attrs.update(
+            {
+                'class': 'border border-gray-300 rounded',
+                'placeholder': self.data['word'] if 'word' in self.data else 'Insira a palavra desejada aqui!'
+            }
+        )
 
-    def clean_word(self):
+    def clean_word(self) -> Word:
+
         word = self.cleaned_data.get("word")
         if Word.objects.filter(word=word).exists():
             raise forms.ValidationError(f"A palavra '{word}' já está registrada.", code="word_exists")

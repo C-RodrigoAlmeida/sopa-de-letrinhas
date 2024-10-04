@@ -9,7 +9,7 @@ from src.game.models.word import Word
 class WordCreateView(LoginRequiredMixin, CreateView):
     model = Word
     form_class = WordForm
-    template_name = "words/word_registration.html"
+    template_name = 'words/word_registration.html'
     success_url = reverse_lazy('word:list')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
