@@ -40,3 +40,4 @@ class ExerciseForm(forms.ModelForm):
                     'class': 'border border-gray-300 rounded',
                 }
             )
+        

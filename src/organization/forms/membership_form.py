@@ -21,10 +21,14 @@ class MembershipForm(forms.ModelForm):
 
         organization_instance = Organization.objects.get(pk=self.organization)
         self.fields['organization'].initial = organization_instance.pk
-        self.fields['organization'].label = f'Organização {organization_instance.name}'
         self.fields['organization'].widget.attrs.update({'readonly': True})
 
         self.fields['role'].label = 'Cargo'
+
+        fields_labels = {
+            'role': 'Cargo',
+            'organization': f'Organização {organization_instance.name}'
+        }
 
         ROLE_DISPLAY_NAMES = {
             'Principal': 'Responsável',
@@ -39,6 +43,7 @@ class MembershipForm(forms.ModelForm):
             self.fields['role'].initial = RoleChoices.STUDENT
 
         for field in self.fields:
+            self.fields[field].label = fields_labels[field]
             self.fields[field].widget.attrs.update({'class': 'border border-gray-300 rounded'})
 
     def save(self, commit: bool = True) -> Membership:

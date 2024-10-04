@@ -12,6 +12,11 @@ class JointForm(forms.ModelForm):
 
         super(JointForm, self).__init__(*args, **kwargs)
 
+        fields_labels = {
+            'is_public': 'Público?',
+            'words': 'Palavras',
+        }
+
         if words_not_in_joint is not None:
             self.fields['words_not_in_joint'] = forms.ModelMultipleChoiceField(
                 queryset=words_not_in_joint,
@@ -20,10 +25,10 @@ class JointForm(forms.ModelForm):
                 # widget=forms.CheckboxSelectMultiple
             )
 
-        self.fields['words'].label = "Palavras"
-        self.fields['is_public'].label = "Público?"
-
         for field in self.fields:
+
+            self.fields[field].label = fields_labels[field]
+
             if field == 'words' and words_not_in_joint in self.fields:
                 self.fields[field].required = False
             else:

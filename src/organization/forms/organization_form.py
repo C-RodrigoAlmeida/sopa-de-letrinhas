@@ -12,18 +12,22 @@ class OrganizationForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
 
-        self.fields['name'].label = "Nome:"
         self.fields['name'].widget.attrs.update({
             'placeholder': 'Insira o nome da organização aqui!'
         })
 
-        self.fields['website'].label = "Site:"
         self.fields['website'].widget.attrs.update({
             'placeholder': 'Insira o site da organização aqui!',
             'onfocus':  'this.value = "https://www."'
         })
 
+        field_labels = {
+            'name': 'Nome',
+            'website': 'Site',
+        }
+
         for field in self.fields:
+            self.fields[field].label = field_labels[field]
             self.fields[field].widget.attrs.update({
                 'class': 'border border-gray-300 rounded'
             })
