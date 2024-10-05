@@ -8,14 +8,13 @@ class MembershipForm(forms.ModelForm):
         model = Membership
         fields = ['organization', 'role']
         widgets = {
-            # Use a hidden input for the organization field to pass the correct ID for validation
             'organization': forms.HiddenInput(),
             'role': forms.Select(),
         }
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        self.organization = kwargs.pop('pk', None)  # Get the organization ID (pk)
+        self.organization = kwargs.pop('pk', None)
         super().__init__(*args, **kwargs)
 
 
