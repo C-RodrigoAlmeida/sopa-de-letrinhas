@@ -4,18 +4,21 @@ class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].label = "Usuário:"
-        self.fields['username'].widget.attrs.update({
-            'placeholder': 'Insira seu nome de usuário aqui!'
-        })
+        field_labels = {
+            'username': 'Usuário',
+            'password': 'Senha',
+        }
 
-        self.fields['password'].label = "Senha:"
-        self.fields['password'].widget.attrs.update({
-            'placeholder': 'Insira sua senha aqui!'
-        })
+        field_placeholders = {
+            'username': 'Insira seu nome de usuário aqui!',
+            'password': 'Insira sua senha aqui!',
+        }
+
 
         for field in self.fields:
+            self.fields[field].label = field_labels[field]
             self.fields[field].required = True
             self.fields[field].widget.attrs.update({
-                'class': 'border border-gray-300 rounded'
+                'class': 'border border-gray-300 rounded',
+                'placeholder': field_placeholders[field]
             })
