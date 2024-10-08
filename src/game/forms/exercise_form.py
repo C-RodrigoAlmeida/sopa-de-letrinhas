@@ -70,7 +70,7 @@ class ExerciseForm(forms.ModelForm):
             self.fields[field].widget.attrs.update(
                 {
                     'onchange': fields_onchange.get(field, ''),
-                    'class': 'border border-gray-300 rounded',
+                    'class': 'capitalize border border-gray-300 rounded' if field == 'name' else 'border border-gray-300 rounded',
                 }
             )
 

@@ -16,7 +16,7 @@ class OrganizationListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> Any:
         search = self.request.GET.get('search', '')
-        return Organization.objects.filter(name=search, deleted_at__isnull=True).order_by('name')
+        return Organization.objects.filter(name__icontains=search, deleted_at__isnull=True).order_by('name')
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
