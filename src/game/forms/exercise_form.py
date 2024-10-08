@@ -23,7 +23,7 @@ class ExerciseForm(forms.ModelForm):
             value = self.request.GET.get(field)
             if value and value.isdigit():
                 setattr(self, field, int(value))
-            elif value and value.isboolean():
+            elif value == 'True' or value == 'False':
                 setattr(self, field, bool(value))
             else:
                 setattr(self, field, value)

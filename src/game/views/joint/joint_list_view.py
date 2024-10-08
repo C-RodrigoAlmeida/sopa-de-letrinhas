@@ -17,7 +17,7 @@ class JointListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet:
         search = self.request.GET.get('search', '')
-        return Joint.objects.filter(words__word__icontains=search, is_public=True, deleted_at__isnull=True).order_by('-created_at').distinct()
+        return Joint.objects.filter(words__word__icontains=search, deleted_at__isnull=True).order_by('-created_at').distinct()
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

@@ -17,7 +17,8 @@ class ExerciseCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('exercise:list')
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        query_params = request.GET.dict()
+        query_params = {k: v for k, v in request.GET.dict().items() if k != 'csrfmiddlewaretoken'}
+
         current_request_hash = hashlib.md5(str(query_params).encode()).hexdigest()
         previous_request_hash = request.session.get('previous_request_hash', None)
 
