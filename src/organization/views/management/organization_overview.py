@@ -1,3 +1,4 @@
+from typing import Any
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -8,4 +9,4 @@ class OrganizationOverviewView(LoginRequiredMixin, DetailView):
     template_name = 'management/organization_details.html'
 
     def get_context_data(self, **kwargs: Any) -> Any:
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)

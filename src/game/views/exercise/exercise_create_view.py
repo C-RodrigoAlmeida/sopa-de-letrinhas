@@ -22,7 +22,7 @@ class ExerciseCreateView(LoginRequiredMixin, CreateView):
         current_request_hash = hashlib.md5(str(query_params).encode()).hexdigest()
         previous_request_hash = request.session.get('previous_request_hash', None)
 
-        if current_request_hash == previous_request_hash:
+        if query_params == {} or current_request_hash == previous_request_hash:
             return super().get(request, *args, **kwargs)
 
         request.session['previous_request_hash'] = current_request_hash

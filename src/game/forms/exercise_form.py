@@ -47,7 +47,6 @@ class ExerciseForm(forms.ModelForm):
         }
 
         self.fields['organization'].queryset = Organization.objects.filter(
-            Q(pk=self.organization) if self.organization else Q(),
             Q(deleted_at__isnull=True),
             Q(membership__user=self.request.user),
             Q(membership__role__in=[RoleChoices.TEACHER, RoleChoices.PRINCIPAL]),
