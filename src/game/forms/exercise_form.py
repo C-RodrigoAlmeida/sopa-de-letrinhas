@@ -1,4 +1,3 @@
-from typing import Any
 from django import forms
 from django.db.models import Q
 from src.game.models.word import Word
@@ -74,10 +73,9 @@ class ExerciseForm(forms.ModelForm):
                 }
             )
 
-    def save(self, commit: bool = ...) -> Any:
+    def save(self, commit: bool = ...) -> Exercise:
         if commit:
             exercise = super().save(commit=False)
             exercise.name = self.cleaned_data['name'].capitalize()
 
         return super().save(commit)
-        
