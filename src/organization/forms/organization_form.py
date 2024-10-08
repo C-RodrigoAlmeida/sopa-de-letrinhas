@@ -12,28 +12,17 @@ class OrganizationForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs.update({
-            'placeholder': 'Insira o nome da organização aqui!'
-        })
-
-        self.fields['website'].widget.attrs.update({
-            'placeholder': 'Insira o site da organização aqui!',
-            'onfocus':  'this.value = "https://www."'
-        })
-
-        field_labels = {
-            'name': 'Nome',
-            'website': 'Site',
-        }
+        self.fields['name'].label = 'Nome'
+        self.fields['website'].label = 'Site'
 
         for field in self.fields:
-            self.fields[field].label = field_labels[field]
+            self.fields[field].required = True
             self.fields[field].widget.attrs.update({
-                'class': 'border border-gray-300 rounded'
+                'class': 'border border-gray-300 rounded' if field != 'name' else 'capitalize border border-gray-300 rounded',
             })
 
     def clean_name(self) -> str:
-        name = self.cleaned_data.get("name")
+        name = self.cleaned_data.get("name").capitalize()
         if Organization.objects.filter(name=name).exists():
             raise forms.ValidationError(f"A organização '{name}' já está registrada.", code="organization_exists")
         return name
@@ -47,6 +36,7 @@ class OrganizationForm(forms.ModelForm):
     def save(self, commit: bool = True) -> Organization:
         organization = super().save(commit=False)
         organization.created_by = self.request.user
+        organization.name = self.cleaned_data['name'].capitalize()
         organization.save()
 
         organization.members.add(self.request.user, through_defaults={'role': RoleChoices.PRINCIPAL})
