@@ -58,22 +58,23 @@ class ExerciseForm(forms.ModelForm):
             deleted_at__isnull=True
         ).order_by('-created_at')
 
-        self.fields['correct_word'].queryset = Word.objects.filter(
-            Q(joints=self.joint) if self.joint else Q(), 
-            deleted_at__isnull=True
-        ).order_by('word')
 
+        self.fields['correct_word'].queryset = Word.objects.filter(
+            Q(joints=self.joint),
+            deleted_at__isnull=True
+        ).order_by('word') if self.joint else Word.objects.none()
+            
         for field in self.fields:
             if field != 'public':
                 self.fields[field].required = True
-
+            
             self.fields[field].widget.attrs.update(
                 {
                     'onchange': fields_onchange.get(field, ''),
                     'class': 'border border-gray-300 rounded',
                 }
             )
-    
+
     def save(self, commit: bool = ...) -> Any:
         if commit:
             exercise = super().save(commit=False)
