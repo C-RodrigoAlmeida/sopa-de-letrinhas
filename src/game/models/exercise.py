@@ -11,3 +11,6 @@ class Exercise(BaseModel):
     joint = models.ForeignKey(Joint, on_delete=models.CASCADE,related_name="joint")
     correct_word = models.ForeignKey(Word, on_delete=models.CASCADE,related_name="correct_word")
     public = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name

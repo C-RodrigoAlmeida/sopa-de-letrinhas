@@ -1,6 +1,6 @@
 <div>
     <h1 class="mb-2">{{ form_title }}</h1>
-    <form method="post">
+    <form id="baseForm" method="get">
         {% csrf_token %}
         {% for field in form %}
             <div class="flex mb-2">
@@ -8,13 +8,20 @@
                 {{ field }}
             </div>
         {% endfor %}
-        <input type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-gray-300 rounded" value="{{ submit_button_text }}">
+        <input type="submit" onclick="submitAsPost()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-gray-300 rounded" value="{{ submit_button_text }}">
     </form>
     {% if form.errors %}
         <div class="errorlist">
             {% for field, errors in form.errors.items %}
-                <strong>{{ field }}:</strong> {{ errors }}
+                <strong>{{ field.label_tag }}:</strong> {{ errors }}
             {% endfor %}
         </div>
     {% endif %}
 </div>
+
+<script>
+    function submitAsPost() {
+        var form = document.getElementById("baseForm");
+        form.method = "post";
+      }
+</script>
