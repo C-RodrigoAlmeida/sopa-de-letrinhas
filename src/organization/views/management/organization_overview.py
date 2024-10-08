@@ -10,3 +10,16 @@ class OrganizationOverviewView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Any:
         context = super().get_context_data(**kwargs)
+
+        context['field_names'] = {
+            'name': 'Nome',
+            'website': 'Site',
+            'get_principals': 'Responsável(eis)',
+            'created_by': 'Criado por',
+            'created_at': 'Criado em',
+            'updated_at': 'Atualizado em' 
+        }
+
+        context['model_description'] = 'da organização'
+
+        return context

@@ -58,7 +58,6 @@ class ExerciseForm(forms.ModelForm):
             deleted_at__isnull=True
         ).order_by('-created_at')
 
-
         self.fields['correct_word'].queryset = Word.objects.filter(
             Q(joints=self.joint),
             deleted_at__isnull=True

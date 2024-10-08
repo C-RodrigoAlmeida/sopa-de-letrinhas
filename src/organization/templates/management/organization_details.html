@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load table_with_pagination_inclusion %}
+{% load base_object_details_inclusion %}
+{% load get_attribute %}
+
+{% block title %}
+    Painel de gestão de organizações
+{% endblock %}
+
+{% block content %}
+    {% base_object_details_inclusion object=object model_description=model_description field_names=field_names control_buttons=control_buttons %} 
+    
+    {% table_with_pagination_inclusion title=title headers=headers acessors=acessors actions=actions object_list=object_list model_name=model_name pagination_controls=pagination_controls search=search %}
+{% endblock %}
