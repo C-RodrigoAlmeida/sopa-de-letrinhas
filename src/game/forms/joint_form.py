@@ -5,17 +5,12 @@ from src.game.models.joint import Joint
 class JointForm(forms.ModelForm):
     class Meta:
         model = Joint
-        fields = ['is_public', 'words']
+        fields = ['words']
 
     def __init__(self, *args, **kwargs):
         words_not_in_joint = kwargs.pop('words_not_in_joint', None)
 
         super(JointForm, self).__init__(*args, **kwargs)
-
-        fields_labels = {
-            'is_public': 'Público?',
-            'words': 'Palavras',
-        }
 
         if words_not_in_joint is not None:
             self.fields['words_not_in_joint'] = forms.ModelMultipleChoiceField(
@@ -24,16 +19,11 @@ class JointForm(forms.ModelForm):
                 label="Palavras não incluidas:",
                 # widget=forms.CheckboxSelectMultiple
             )
-
-        for field in self.fields:
-
-            self.fields[field].label = fields_labels[field]
-
-            if field == 'words' and words_not_in_joint in self.fields:
-                self.fields[field].required = False
-            else:
-                self.fields[field].required = True
-
-            self.fields[field].widget.attrs.update({
+        
+        self.fields['words'].label = 'Palavras'
+        self.fields['words'].required = True
+        self.fields['words'].widget.attrs.update({
                 'class': 'border border-gray-300 rounded'
             })
+
+
