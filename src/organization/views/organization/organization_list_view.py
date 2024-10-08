@@ -15,8 +15,8 @@ class OrganizationListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self) -> Any:
-        # TODO: add search
-        return Organization.objects.all().order_by('name')
+        search = self.request.GET.get('search', '')
+        return Organization.objects.filter(name=search, deleted_at__isnull=True).order_by('name')
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
