@@ -39,7 +39,11 @@ class OrganizationForm(forms.ModelForm):
         organization.name = self.cleaned_data['name'].capitalize()
         organization.save()
 
-        organization.members.add(self.request.user, through_defaults={'role': RoleChoices.PRINCIPAL})
+        organization.members.add(self.request.user, through_defaults={
+                'role': RoleChoices.PRINCIPAL,
+                'approved': True
+            }
+        )
 
         if commit:
             organization.save()
