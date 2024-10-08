@@ -56,7 +56,6 @@ class ExerciseForm(forms.ModelForm):
         ).order_by("name").distinct()
 
         self.fields['joint'].queryset = Joint.objects.filter(
-            Q(pk=self.joint) if self.joint else Q(), 
             deleted_at__isnull=True
         ).order_by('-created_at')
 
