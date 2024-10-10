@@ -15,7 +15,7 @@ class JointListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     template_name = "joints/joint_list.html"
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Joint]:
         search = self.request.GET.get('search', '')
         return Joint.objects.filter(words__word__icontains=search, deleted_at__isnull=True).order_by('-created_at').distinct()
     

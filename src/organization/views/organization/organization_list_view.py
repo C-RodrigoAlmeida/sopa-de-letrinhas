@@ -5,8 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
+from django.db.models.query import QuerySet
 
 from src.organization.models.organization import Organization
+from src.organization.models.membership import RoleChoices
 
 class OrganizationListView(LoginRequiredMixin, ListView):
     model = Organization
@@ -14,10 +16,14 @@ class OrganizationListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     paginate_by = 10
 
-    def get_queryset(self) -> Any:
+    def get_queryset(self) -> QuerySet[Organization]:
         search = self.request.GET.get('search', '')
-        return Organization.objects.filter(name__icontains=search, deleted_at__isnull=True).order_by('name')
-    
+
+        return Organization.objects.filter(
+            name__icontains=search,
+            deleted_at__isnull=True
+        ).order_by('name')
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 

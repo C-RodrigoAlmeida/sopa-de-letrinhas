@@ -15,7 +15,7 @@ class WordListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     template_name = "words/word_list.html"
 
-    def get_queryset(self) -> QuerySet[Any]:
+    def get_queryset(self) -> QuerySet[Word]:
         search = self.request.GET.get('search', '')
         return self.model.objects.filter(word__icontains=search, deleted_at__isnull=True).order_by('word') if search else self.model.objects.filter(deleted_at__isnull=True).order_by('word')
 

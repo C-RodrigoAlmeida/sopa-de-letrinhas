@@ -4,6 +4,7 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import Paginator
 from django.core.paginator import PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models.query import QuerySet
 
 from src.organization.models.membership import Membership
 
@@ -13,7 +14,7 @@ class MembershipListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     paginate_by = 10
 
-    def get_queryset(self) -> Any:
+    def get_queryset(self) -> QuerySet[Membership]:
         search = self.request.GET.get('search', '')
         queryset = Membership.objects.filter(organization_id=self.kwargs.get('pk', None)).select_related('user', 'organization')
 
