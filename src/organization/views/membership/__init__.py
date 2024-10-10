@@ -1,1 +1,2 @@
 from .membership_create_view import MembershipCreateView
+from .membership_list_view import MembershipListView

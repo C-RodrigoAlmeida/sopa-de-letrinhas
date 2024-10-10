@@ -1,18 +1,27 @@
 import re
 import types
 from django import template
-numeric_test = re.compile("^\d+$")
+
 register = template.Library()
 
 @register.filter(name='get_attribute')
-def get_attribute(value: object | dict, arg: str | types.MethodType) -> str:
+def get_attribute(value, arg):
+    print(f"Accessing: {arg} in {value}")
+
     if isinstance(value, dict):
-        return value[arg]
+        return value.get(arg, '')
+
+    if isinstance(value, list) and arg.isdigit():
+        index = int(arg)
+        return value[index] if 0 <= index < len(value) else ''
+
+    try:
+        attribute = getattr(value, arg)
+        
+        if isinstance(attribute, types.MethodType):
+            return attribute()
+        return attribute
     
-    elif isinstance(value, list):
-        return value[int(arg)]
-    
-    elif isinstance(getattr(value, arg), types.MethodType):
-        return getattr(value, arg)()
-    
-    return getattr(value, arg)
+    except AttributeError:
+        return ''
+
