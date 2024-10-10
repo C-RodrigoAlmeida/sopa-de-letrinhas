@@ -18,19 +18,15 @@ class MembershipListView(LoginRequiredMixin, ListView):
         search = self.request.GET.get('search', '')
         queryset = Membership.objects.filter(organization_id=self.kwargs.get('pk', None)).select_related('user', 'organization')
 
-        print(queryset)
         return queryset
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        queryset = self.get_queryset()
-        for obj in queryset:
-            print(obj.user.username)
 
         context['title'] = 'Lista de membros registrados'
-        context['headers'] = ['Nome', 'Ações']
-        context['acessors'] = ['user', 'action']
+        context['headers'] = ['Nome', 'Cargo', 'Ações']
+        context['acessors'] = ['user.get_full_name', 'role', 'action']
         context['model_name'] = 'membership'
         context['actions'] = {
             # 'organization:details': 'fa-regular fa-eye',
@@ -52,5 +48,4 @@ class MembershipListView(LoginRequiredMixin, ListView):
         except EmptyPage:
             context['pagination_controls'] = paginator.page(paginator.num_pages)
 
-        print(f'context: {context}')
         return context

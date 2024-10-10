@@ -1,27 +1,33 @@
-import re
 import types
 from django import template
 
 register = template.Library()
 
-@register.filter(name='get_attribute')
+@register.filter(name="get_attribute")
 def get_attribute(value, arg):
-    print(f"Accessing: {arg} in {value}")
-
-    if isinstance(value, dict):
-        return value.get(arg, '')
-
-    if isinstance(value, list) and arg.isdigit():
-        index = int(arg)
-        return value[index] if 0 <= index < len(value) else ''
-
-    try:
-        attribute = getattr(value, arg)
-        
-        if isinstance(attribute, types.MethodType):
-            return attribute()
-        return attribute
     
-    except AttributeError:
-        return ''
+    attrs = arg.split('.')
+    
+    try:
+        for attr in attrs:
+            if isinstance(value, dict):
+                value = value.get(attr, '')
 
+            elif isinstance(value, list) and attr.isdigit():
+                index = int(attr)
+                value = value[index] if 0 <= index < len(value) else ''
+                
+            else:
+                attribute = getattr(value, attr, None)
+                
+                if isinstance(attribute, types.MethodType):
+                    value = attribute()
+                else:
+                    value = attribute
+
+            if value == '':
+                return ''
+        
+        return value
+    except (AttributeError, IndexError):
+        return ''
