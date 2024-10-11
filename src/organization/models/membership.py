@@ -15,8 +15,17 @@ class Membership(BaseModel):
     role = models.CharField(max_length=15, choices=RoleChoices.choices)
     approved = models.BooleanField(default=False)
 
-    def get_principals(self):
-        return self.organization.members.filter(role=RoleChoices.PRINCIPAL)
+    def get_principals(self) -> str:
+        principals = self.organization.members.filter(role=RoleChoices.PRINCIPAL)
+        return ", ".join([principal.user.get_full_name() for principal in principals])
+    
+    def get_translated_role(self) -> str:
+        ROLE_DISPLAY_NAMES = {
+            'Principal': 'Responsável/Coordenador',
+            'Teacher': 'Professor',
+            'Student': 'Aluno',
+        }
+        return ROLE_DISPLAY_NAMES[self.role]
 
     class Meta:
         unique_together = ('user', 'organization')

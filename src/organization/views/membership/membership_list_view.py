@@ -16,7 +16,15 @@ class MembershipListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Membership]:
         search = self.request.GET.get('search', '')
-        queryset = Membership.objects.filter(organization_id=self.kwargs.get('pk', None)).select_related('user', 'organization')
+        queryset = Membership.objects.filter(
+            organization_id=self.kwargs.get('pk', None),
+            approved=True,
+            deleted_at__isnull=True,
+            user__first_name__icontains=search,
+            user__last_name__icontains=search,
+            user__email__icontains=search,
+            user__is_active=True
+        ).select_related('user', 'organization').order_by('role', 'user__first_name', 'user__last_name')
 
         return queryset
     
@@ -25,8 +33,8 @@ class MembershipListView(LoginRequiredMixin, ListView):
 
 
         context['title'] = 'Lista de membros registrados'
-        context['headers'] = ['Nome', 'Cargo', 'Ações']
-        context['acessors'] = ['user.get_full_name', 'role', 'action']
+        context['headers'] = ['Nome', 'Cargo', 'Email', 'Registro na organização', 'Ações']
+        context['acessors'] = ['user.get_full_name', 'get_translated_role',  'user.email', 'created_at', 'action']
         context['model_name'] = 'membership'
         context['actions'] = {
             # 'organization:details': 'fa-regular fa-eye',
