@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.query import QuerySet
 
 from src.organization.models.membership import Membership
+from src.core.utils.sort_combinations import sort_combinations
 
 class MembershipListView(LoginRequiredMixin, ListView):
     model = Membership
@@ -14,20 +15,15 @@ class MembershipListView(LoginRequiredMixin, ListView):
     context_object_name = "object_list"
     paginate_by = 10
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Membership]:
         search = self.request.GET.get('search', '')
         sort = self.request.GET.get('sort', 'user.get_full_name')  
-        sort_translated = { # to handle sql injection
+        sort_options = { # to handle sql injection
             'get_translated_approved': 'approved',
-            '-get_translated_approved': '-approved',
             'get_translated_role': 'role',
-            '-get_translated_role': '-role',
             'user.get_full_name': 'user__first_name',
-            '-user.get_full_name': '-user__first_name',
             'user.email': 'user__email',
-            '-user.email': '-user__email',
             'created_at': 'created_at',
-            '-created_at': '-created_at',
             'default': 'user__first_name'
         }
 
@@ -36,7 +32,7 @@ class MembershipListView(LoginRequiredMixin, ListView):
             deleted_at__isnull=True,
             user__first_name__icontains=search,
             user__is_active=True
-        ).select_related('user', 'organization').order_by(sort_translated[sort])
+        ).select_related('user', 'organization').order_by(sort_combinations(sort_options)[sort])
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

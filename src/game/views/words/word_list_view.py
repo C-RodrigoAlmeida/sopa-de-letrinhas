@@ -8,6 +8,7 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 
 from src.game.models.word import Word
+from src.core.utils.sort_combinations import sort_combinations
 
 class WordListView(LoginRequiredMixin, ListView):
     model = Word
@@ -17,7 +18,18 @@ class WordListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Word]:
         search = self.request.GET.get('search', '')
-        return self.model.objects.filter(word__icontains=search, deleted_at__isnull=True).order_by('word') if search else self.model.objects.filter(deleted_at__isnull=True).order_by('word')
+        sort = self.request.GET.get('sort', 'word')
+        sort_options = {
+            'word': 'word',
+            'created_by': 'created_by',
+            'created_at': 'created_at',
+            'default': 'word'
+        }
+        
+        return self.model.objects.filter(
+            word__icontains=search,
+            deleted_at__isnull=True
+        ).order_by(sort_combinations(sort_options)[sort])
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

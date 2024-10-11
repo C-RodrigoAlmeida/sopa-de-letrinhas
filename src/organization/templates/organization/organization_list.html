@@ -6,5 +6,5 @@
 {% endblock %}
 
 {% block content %}
-    {% table_with_pagination_inclusion title=title headers=headers accessors=accessors actions=actions object_list=object_list model_name=model_name pagination_controls=pagination_controls search=search %}
+    {% table_with_pagination_inclusion title=title headers=headers accessors=accessors actions=actions object_list=object_list model_name=model_name pagination_controls=pagination_controls search=search request=request %}
 {% endblock %}

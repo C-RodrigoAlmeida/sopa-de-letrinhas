@@ -8,7 +8,7 @@ from django.core.paginator import EmptyPage
 from django.db.models.query import QuerySet
 
 from src.organization.models.organization import Organization
-from src.organization.models.membership import RoleChoices
+from src.core.utils.sort_combinations import sort_combinations
 
 class OrganizationListView(LoginRequiredMixin, ListView):
     model = Organization
@@ -18,11 +18,18 @@ class OrganizationListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Organization]:
         search = self.request.GET.get('search', '')
+        sort = self.request.GET.get('sort', 'name')
+        sort_options = {
+            'name': 'name',
+            'website': 'website',
+            'get_principals': 'membership__user__first_name',
+            'default': 'name'
+        }
 
         return Organization.objects.filter(
             name__icontains=search,
             deleted_at__isnull=True
-        ).order_by('name')
+        ).order_by(sort_combinations(sort_options)[sort])
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

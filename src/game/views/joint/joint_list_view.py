@@ -8,6 +8,7 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 
 from src.game.models.joint import Joint
+from src.core.utils.sort_combinations import sort_combinations
 
 class JointListView(LoginRequiredMixin, ListView):
     model = Joint
@@ -17,7 +18,13 @@ class JointListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self) -> QuerySet[Joint]:
         search = self.request.GET.get('search', '')
-        return Joint.objects.filter(words__word__icontains=search, deleted_at__isnull=True).order_by('-created_at').distinct()
+        sort = self.request.GET.get('sort', 'created_at')
+        sort_options = {
+            'display_words': 'created_at',
+            'created_at': 'created_at',
+            'default': 'created_at'
+        }
+        return Joint.objects.filter(words__word__icontains=search, deleted_at__isnull=True).order_by(sort_combinations(sort_options)[sort]).distinct()
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
