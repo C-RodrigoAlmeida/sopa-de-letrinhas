@@ -28,8 +28,9 @@ class OrganizationListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context['title'] = 'Lista de organizações'
+        context['request'] = self.request
         context['headers'] = ['Nome', 'Site', 'Responsável(eis)', 'Ações']
-        context['acessors'] = ['name', 'website', 'get_principals', 'action']
+        context['accessors'] = ['name', 'website', 'get_principals', 'action']
         context['model_name'] = 'organization'
         context['actions'] = {
             'organization:details': 'fa-regular fa-eye',

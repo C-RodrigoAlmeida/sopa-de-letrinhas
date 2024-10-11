@@ -23,8 +23,9 @@ class WordListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context['title'] = 'Lista de palavras registradas'
+        context['request'] = self.request
         context['headers'] = ['Palavra', 'Criado por', 'Criado em', 'Ações']
-        context['acessors'] = ['word', 'created_by', 'created_at', 'action']
+        context['accessors'] = ['word', 'created_by', 'created_at', 'action']
         context['actions'] = {
             'word:details': 'fa-regular fa-eye',
             'word:update': 'fa-regular fa-pen-to-square',

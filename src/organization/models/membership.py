@@ -27,6 +27,9 @@ class Membership(BaseModel):
         }
         return ROLE_DISPLAY_NAMES[self.role]
 
+    def get_translated_approved(self) -> str:
+        return "Aprovado" if self.approved else "Pendente"
+
     class Meta:
         unique_together = ('user', 'organization')
 

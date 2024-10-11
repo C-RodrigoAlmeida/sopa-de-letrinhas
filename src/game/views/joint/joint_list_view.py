@@ -23,8 +23,9 @@ class JointListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context['title'] = 'Lista de conjuntos de palavras'
+        context['request'] = self.request
         context['headers'] = ['Conjunto de palavras', 'Criado em', 'Ações']
-        context['acessors'] = ['display_words', 'created_at', 'action']
+        context['accessors'] = ['display_words', 'created_at', 'action']
         context['actions'] = {
             'joint:details': 'fa-regular fa-eye',
             'joint:update': 'fa-regular fa-pen-to-square',
